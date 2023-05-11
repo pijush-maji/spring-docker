@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  mongo-docker:
+    container_name: mongo-docker
+    image: mongo
+    networks:
+      spring-docker-net:
+
+  spring-docker-demo:
+    container_name: spring-docker-demo
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    depends_on:
+      - mongo-docker
+    networks:
+      spring-docker-net:
+    restart: on-failure
+
+
+
+networks:
+  spring-docker-net:
